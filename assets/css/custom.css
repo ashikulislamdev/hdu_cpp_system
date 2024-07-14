@@ -1,0 +1,113 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.action-col{
+    max-width: 100px;
+    text-align: center;
+}
+.text-20{
+    font-size: 20px;
+}
+
+/* Loader CSS */
+
+
+.loader_overlay{
+	display: none;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background: #fff;
+	z-index: 10000;
+	opacity: 0.7;
+}
+
+.loader{
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+	border: 10px solid #333;
+	position: relative;
+	top: 30%;
+	left: 45%;
+	animation: loader 2s linear infinite;
+}
+
+@keyframes loader {
+	50%{
+		opacity: 0.5;
+	}
+	100%{
+		transform: rotate(360deg);
+		-webkit-transform: rotate(360deg);
+		-moz-transform: rotate(360deg);
+		-ms-transform: rotate(360deg);
+		-o-transform: rotate(360deg);
+	}
+}
+
+.loader::after{
+	content: "";
+	width: 35px;
+	height: 35px;
+	background: #333;
+	position: absolute;
+	border-radius: 50%;
+	top: -20px;
+	left: 55px;
+}
+
+.loader::before{
+	content: "";
+	width: 0px;
+	height: 0px;
+	border-left: 15px solid transparent;
+	border-right: 15px solid transparent;
+	border-bottom: 15px solid #333;
+	position: absolute;
+	transform: rotate(-90deg);
+	top: -10px;
+	left: 39px;
+}
+
+.table td{
+	vertical-align: inherit !important;
+}
+
+/* css for box-icon */
+.bx_large{
+	font-size: x-large;
+}
+.bx_medium{
+	font-size: large;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered{
+	background-color: transparent !important;
+	padding-left: 5px;
+	padding-top: 3px;
+}
+
+.select2-container--default .select2-selection--single{
+	height: 35px !important;
+	border-radius: 0px !important;
+	-webkit-border-radius: 0px !important;
+	-moz-border-radius: 0px !important;
+	-ms-border-radius: 0px !important;
+	-o-border-radius: 0px !important;
+}
+
+/* css media query */
+@media only screen and (max-width: 576px) {
+	.auth-box{
+		min-height: 100vh !important;
+		display: flex !important;
+		align-items: center !important;
+	}
+	.login-logo{
+		width: 200px !important;
+	}
+}
