@@ -12,7 +12,7 @@
 			$currentAuth = $_COOKIE[$cookie_name];
 		}		
 		
-		$dbAuth = "SELECT * FROM `admin` WHERE `auth` = '$currentAuth' AND `status` = 'active'";
+		$dbAuth = "SELECT * FROM `users` WHERE `auth` = '$currentAuth' AND `status` = 'active'";
 		$runAuth = mysqli_query($conn,$dbAuth);
 		if(mysqli_num_rows($runAuth) > 0){
 			$current_user = mysqli_fetch_assoc($runAuth);

@@ -1,7 +1,7 @@
 <?php
 
     if(!isset($current_user)){die('Unauthorized Error');}
-    if($current_user['usertype'] != 'Developer'){die('You have no permission to access this page.');}
+    if($current_user['usertype'] == 'Student'){die('You have no permission to access this page.');}
 
     // Include Supplier API
     include 'api/users.php';
@@ -18,7 +18,7 @@
 						<tr>
 							<th class="text-center">SL No</th>
 							<th class="text-center">Name</th>
-							<th class="text-center">Phone</th>
+							<th class="text-center">Type</th>
 							<th class="text-center">Status</th>
 							<th class="text-center">Action</th>
 						</tr>
@@ -31,7 +31,7 @@
 						<tr>
 							<td><?php echo ++$key; ?></td>
 							<td><?php echo $value['name']; ?></td>
-							<td><?php echo $value['phone']; ?></td>
+							<td><?php echo $value['usertype']; ?></td>
 							<td><?php echo $value['status']; ?></td>
 							<td>
 								<a href="#view_modal<?php echo $value['id']; ?>" data-toggle="modal" class="btn btn-sm bg-primary">View</a>
@@ -57,11 +57,7 @@
                                         <hr>
                                         <p class="m-0">Name: <b><?php echo $value['name']; ?></b></p>
                                         <hr>
-                                        <p class="m-0">Email: <b><?php echo $value['email']; ?></b></p>
-                                        <hr>
                                         <p class="m-0">Phone: <b><?php echo $value['phone']; ?></b></p>
-                                        <hr>
-                                        <p class="m-0">Address: <b><?php echo $value['address']; ?></b></p>
                                         <hr>
                                         <p class="m-0">Usertype: <b><?php echo $value['usertype']; ?></b></p>
                                         <hr>
@@ -87,8 +83,16 @@
                                                 <div class="col-12">
                                                     <input type="hidden" name="user_edit_id" value="<?php echo $value['id']; ?>" required readonly>
                                                     <div class="form-group">
+                                                        <label for="Name" class="col-form-label">Name:</label>
+                                                        <input type="text" class="form-control" name="name" value="<?php echo $value['name']; ?>" placeholder="Enter username" required>
+                                                    </div>
+                                                    <div class="form-group">
                                                         <label for="username" class="col-form-label">Username:</label>
                                                         <input type="text" class="form-control" name="username" value="<?php echo $value['username']; ?>" placeholder="Enter username" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="Phone" class="col-form-label">Phone:</label>
+                                                        <input type="text" class="form-control" name="phone" value="<?php echo $value['phone']; ?>" placeholder="Enter username" required>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="password" class="col-form-label">Password:</label>
@@ -97,7 +101,8 @@
                                                     <div class="form-group">
                                                         <label for="usertype" class="col-form-label">Usertype:</label>
                                                         <select name="usertype" id="usertype" class="form-control">
-                                                            <option value="Admin" <?php $value['usertype']=='Admin' ? 'selected' : null; ?> >Admin</option>
+                                                            <option value="Student" <?php $value['usertype']=='Student' ? 'selected' : null; ?> >Student</option>
+                                                            <option value="Teacher" <?php $value['usertype']=='Teacher' ? 'selected' : null; ?> >Teacher</option>
                                                             <option value="Developer" <?php $value['usertype']=='Developer' ? 'selected' : null; ?> >Developer</option>
                                                         </select>
                                                     </div>
@@ -158,16 +163,8 @@
                             <input type="text" class="form-control" name="name" value="" placeholder="Enter name" required>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="email" class="col-form-label">Email:</label>
-                            <input type="email" class="form-control" name="email" placeholder="Enter email" required>
-                        </div>
-                        <div class="form-group col-md-6">
                             <label for="phone" class="col-form-label">Phone:</label>
                             <input type="text" class="form-control" name="phone" placeholder="Enter Phone" required>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="address" class="col-form-label">Address:</label>
-                            <input type="text" class="form-control" name="address" placeholder="Enter Address" required>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="username" class="col-form-label">Username:</label>
@@ -175,12 +172,13 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="password" class="col-form-label">Password:</label>
-                            <input type="password" class="form-control" name="password" value="" placeholder="Enter password" required>
+                            <input type="text" class="form-control" name="password" value="" placeholder="Enter password" required>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="usertype" class="col-form-label">Usertype:</label>
                             <select name="usertype" id="usertype" class="form-control">
-                                <option value="Admin">Admin</option>
+                                <option value="Student">Student</option>
+                                <option value="Teacher">Teacher</option>
                                 <option value="Developer">Developer</option>
                             </select>
                         </div>

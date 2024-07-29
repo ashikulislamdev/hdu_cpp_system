@@ -14,6 +14,6 @@
 <script src="assets/js/pcoded.min.js"></script>
 <script src="assets/js/vartical-demo.js"></script>
 <script src="assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
-<!-- Select2 CDN -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
+<!-- Select2 -->
+<script src="assets/js/select2/js/select2.min.js"></script>
 <script src="assets/js/custom.js"></script>

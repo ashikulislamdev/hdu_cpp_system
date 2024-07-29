@@ -1,57 +1,58 @@
 <?php
 
-	if(!isset($current_user)){die('Unauthorized Error');}
-	$current_user_id = $current_user['id'];
+	if (isset($_POST['details_submit'])) { // Correct the condition check
+		$userName = htmlentities(addslashes($_POST['Name']));
+		$userPhone = htmlentities(addslashes($_POST['Phone']));
+		$currentUserLogo = htmlentities(addslashes($_POST['currentUserLogo'])); // Correct hidden field reference
+		$current_user_id = $current_user['id'];
 
-	if (isset($_POST['details_submit'])=='submit') {
-		$instituteName = htmlentities(addslashes($_POST['instituteName']));
-		$instituteEmail = htmlentities(addslashes($_POST['instituteEmail']));
-		$institutePhone = htmlentities(addslashes($_POST['institutePhone']));
-		$instituteAddress = htmlentities(addslashes($_POST['instituteAddress']));
-		$currentInstituteLogo = htmlentities(addslashes($_POST['currentInstituteLogo']));
+		if (!$userName == '' && !$userPhone == '') {
 
-		if(!$instituteName == '' && !$instituteEmail == '' && !$institutePhone == ''){
-			
 			if (!empty($_FILES['logo']['name'])) {
-				$my_file = $_FILES["logo"]['name'];
-		        $file_TmpName = $_FILES['logo']['tmp_name'];
+				$my_file = $_FILES['logo']['name'];
+				$file_TmpName = $_FILES['logo']['tmp_name'];
 
 				$extension = pathinfo($my_file, PATHINFO_EXTENSION);
 				$valid_extension = array("JPG", "jpg", "PNG", "png", "gif", "jpeg");
 
 				if (in_array($extension, $valid_extension)) {
 					$file_Name = rand() . "." . $extension;
-				
-					move_uploaded_file($file_TmpName, "images/$file_Name");
 
-					$unlink_img = "images/".$currentInstituteLogo;
-					if (file_exists($unlink_img)) {
-						unlink($unlink_img);
+					// Move the uploaded file
+					if (move_uploaded_file($file_TmpName, "assets/images/$file_Name")) {
+						$unlink_img = "assets/images/" . $currentUserLogo;
+						if (file_exists($unlink_img) && $currentUserLogo !== '') {
+							unlink($unlink_img);
+						}
+
+						$currentUserLogo = $file_Name;
+					} else {
+						echo "<script>alert('Failed to upload the image.'); location.href='profile.php';</script>";
+						exit;
 					}
 
-					$currentInstituteLogo = $file_Name;
-					
-				}else{
-					echo "<script>alert('Invalid file'); location.href='profile.php';</script>";
+				} else {
+					echo "<script>alert('Invalid file extension. Allowed: JPG, PNG, GIF, JPEG'); location.href='profile.php';</script>";
+					exit;
 				}
 			}
-			
-			$updateSql = "UPDATE `admin` SET `name` = '$instituteName', `email` = '$instituteEmail', `phone` = '$institutePhone', `address` = '$instituteAddress', `image` = '$currentInstituteLogo' WHERE `id` = '$current_user_id'";
 
-			// echo $updateSql;die();
+			// Prepare the update statement
+			$updateSql = "UPDATE `users` SET `name` = '$userName', `phone` = '$userPhone', `image` = '$currentUserLogo' WHERE `id` = $current_user_id";
 
+			// Execute the update query
 			$runUpdateQuery = mysqli_query($conn, $updateSql);
 			if ($runUpdateQuery) {
-				echo "<script>alert('Information Updated Successful'); location.href='profile.php';</script>";
-			}else{
-				echo "<script>alert('Sorry! something wrong.'); location.href='profile.php';</script>";
+				echo "<script>alert('Information Updated Successfully'); location.href='profile.php';</script>";
+			} else {
+				echo "<script>alert('Sorry! Something went wrong.'); location.href='profile.php';</script>";
 			}
-		}else{
-			echo "<script>alert('All field are required.'); location.href='profile.php';</script>";
+		} else {
+			echo "<script>alert('All fields are required.'); location.href='profile.php';</script>";
 		}
 	}else if (isset($_POST['pass_update'])=='submit') {
 
-		$username = htmlentities(addslashes($_REQUEST['username']));
+		// $username = htmlentities(addslashes($_REQUEST['username']));
         $current_pass = htmlentities(addslashes(md5(trim($_POST['old_pass']))));
         $new_pass = htmlentities(addslashes(md5(trim($_POST['new_pass']))));
         $confirm_pass = htmlentities(addslashes(md5(trim($_POST['confirm_pass']))));
@@ -59,7 +60,7 @@
 		if (!$current_pass == '' && !$new_pass == '' && !$confirm_pass == '') {
 
 			$current_user_id = $current_user['id'];
-			$select_pwd ="SELECT * FROM `admin` WHERE id = '$current_user_id'";
+			$select_pwd ="SELECT * FROM `users` WHERE id = '$current_user_id'";
 	        $run_query = mysqli_query($conn,$select_pwd);
 	        while($getoldpwd = mysqli_fetch_array($run_query)){
 	            $oldpwd = $getoldpwd['password'];
@@ -69,7 +70,7 @@
 
 	        if ($oldpwd===$current_pass) {
 	            if ($confirm_pass===$new_pass) {
-	                $updatePwdQuery = "UPDATE admin SET username='$username', password='$confirm_pass', auth='$auth' WHERE id = '$current_user_id'";
+	                $updatePwdQuery = "UPDATE users SET password='$confirm_pass', auth='$auth' WHERE id = '$current_user_id'";
 					// echo $updatePwdQuery; die();
 
 	                $runPassUpdateQuery = mysqli_query($conn,$updatePwdQuery);
@@ -94,29 +95,29 @@
 <div class="row">
 	<div class="col-md-4 mx-auto pb-0 pt-5 mt-5">
 		<div class="card mb-2" id="profile_card">
-			<img src="<?php echo "images/". $current_user['image'] ?? null; ?>" onerror="this.src='assets/images/logo.png'" class="my-3" style="max-height: 100px; max-width: 100px; margin: auto; border-radius: 10px;">
+			<img src="<?php echo "assets/images/". $current_user['image'] ?? null; ?>" onerror="this.src='assets/images/logo.png'" class="my-3" style="max-height: 100px; max-width: 100px; margin: auto; border-radius: 10px;">
 			<h4 class="text-center"><?php echo $current_user['name']; ?></h4>
-			<h6 class="text-center"><?php echo $current_user['address']; ?></h6>
-			<p class="text-center m-0"><?php echo $current_user['email']; ?></p>
+			<h6 class="text-center"><?php echo $current_user['username']; ?></h6>
+			<!-- <p class="text-center m-0"><?php // echo $current_user['email']; ?></p> -->
 			<p class="text-center"><?php echo $current_user['phone']; ?></p>
 
 			<div class="row pb-3">
 				<div class="col-md-10 text-center mx-auto">
-					<button class="btn btn-primary btn-block" data-toggle="modal" data-target="#instituteinfoModal">Update Shop Information</button>
+					<button class="btn btn-primary btn-block" data-toggle="modal" data-target="#userinfoModal">Update Your Information</button>
 				</div>
 			</div>
 
 		</div>
 	</div>
 	<div class="col-md-12 text-center">
-		<p><a href="#" data-toggle="modal" data-target="#pass_modal">Update Login Details ?</a></p>
+		<p><a href="#" data-toggle="modal" data-target="#pass_modal">Update Password ?</a></p>
 	</div>
 
-	<div class="modal fade" id="instituteinfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="userinfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 		<div class="modal-header">
-			<h5 class="modal-title" id="exampleModalLabel">Update Shop Information</h5>
+			<h5 class="modal-title" id="exampleModalLabel">Update Information</h5>
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			<span aria-hidden="true">&times;</span>
 			</button>
@@ -125,29 +126,20 @@
 			<div class="modal-body">
 				<div class="row">
 					<div class="col-md-12">
-						<label><b>Shop Name :</b></label>
-						<input type="text" placeholder="Shop name" name="instituteName" value="<?php echo $current_user['name']; ?>" class="form-control" required>
+						<label><b> Name :</b></label>
+						<input type="text" placeholder="Name" name="Name" value="<?php echo htmlspecialchars($current_user['name']); ?>" class="form-control" required>
 					</div>
 					<div class="col-md-12 pt-2">
-						<label><b>Shop Email :</b></label>
-						<input type="email" placeholder="Shop Email" name="instituteEmail" value="<?php echo $current_user['email']; ?>" class="form-control" required>
+						<label><b>Phone :</b></label>
+						<input type="text" placeholder="Phone" name="Phone" value="<?php echo htmlspecialchars($current_user['phone']); ?>" class="form-control" required>
 					</div>
 					<div class="col-md-12 pt-2">
-						<label><b>Shop Phone :</b></label>
-						<input type="text" placeholder="Shop Phone" name="institutePhone" value="<?php echo $current_user['phone']; ?>" class="form-control" required>
-					</div>
-					<div class="col-md-12 pt-2">
-						<label><b>Address :</b></label>
-						<input type="text" placeholder="Enter Address" name="instituteAddress" value="<?php echo $current_user['address']; ?>" class="form-control" required>
-					</div>
-					<div class="col-md-12 pt-2">
-						<label><b>Shop Logo :</b></label><br>
-						<img src="<?php echo "images/". $current_user['image'] ?? null; ?>" onerror="this.src='assets/images/logo.png'" style="max-height: 120px; max-width: 120px;">
+						<label><b>Profile :</b></label><br>
+						<img src="<?php echo "images/" . htmlspecialchars($current_user['image'] ?? ''); ?>" onerror="this.src='assets/images/logo.png'" style="max-height: 120px; max-width: 120px;">
 						<br>
-						<input type="hidden" name="currentInstituteLogo" value="<?php echo $current_user['image']; ?>" required readonly>
+						<input type="hidden" name="currentUserLogo" value="<?php echo htmlspecialchars($current_user['image']); ?>" readonly>
 						<input type="file" name="logo">
 					</div>
-
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -163,7 +155,7 @@
 		<div class="modal-dialog " role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Update Login Info</h5>
+					<h5 class="modal-title" id="exampleModalLabel">Update Password</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 					</button>
@@ -172,10 +164,10 @@
 					<div class="modal-body">
 						<div class="row">
 							<div class="col-12">
-								<div class="form-group">
+								<!-- <div class="form-group">
 									<label for="phone_no" class="col-form-label">Current Username:</label>
 									<input type="text" class="form-control" name="username" placeholder="Enter username" value="<?php echo $current_user['username']; ?>" required>
-								</div>
+								</div> -->
 								<div class="form-group">
 									<label for="phone_no" class="col-form-label">Current Passoword:</label>
 									<input type="password" class="form-control" name="old_pass" value="" placeholder="Current Passoword" required>

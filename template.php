@@ -71,6 +71,8 @@
                                                     include("views/profile.php");
                                                 }else if($views == 'users'){
                                                     include("views/users.php");
+                                                }else if($views == 'manage_cpp'){
+                                                    include("views/manage_cpp.php");
                                                 }
                                             }
                                         ?>

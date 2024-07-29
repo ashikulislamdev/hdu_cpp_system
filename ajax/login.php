@@ -13,7 +13,7 @@
 				$password = md5(trim($password));
 				$auth = md5(trim($username.$password));
 
-				$sql = "SELECT * FROM `admin` WHERE `username` = '$username' AND `password` = '$password'";
+				$sql = "SELECT * FROM `users` WHERE `username` = '$username' AND `password` = '$password'";
 				$runSql = mysqli_query($conn, $sql);
 				if(mysqli_num_rows($runSql) > 0 ){
 					$sql_data = mysqli_fetch_assoc($runSql);

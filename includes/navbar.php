@@ -48,7 +48,7 @@
                            
                            <li class="user-profile header-notification">
                                <a href="#!">
-                                   <img src="<?php echo "images/". $current_user['image'] ?? null; ?>" onerror="this.src='assets/images/logo.png'" class="img-radius" alt="User-Profile-Image" style="background: rgba(255,255,255,0.7);">
+                                   <img src="<?php echo "assets/images/". $current_user['image'] ?? null; ?>" onerror="this.src='assets/images/logo.png'" class="img-radius" alt="User-Profile-Image" style="background: rgba(255,255,255,0.7);">
                                    <span><?php echo $current_user['name'] ?? null; ?></span>
                                    <i class='bx bx-chevron-down' style='font-size:22px'></i>
                                </a>
@@ -56,11 +56,6 @@
                                    <li>
                                        <a href="profile.php" class="d-flex align-items-center">
                                             <i class='bx bx-user'  style="font-size:23px"></i> &nbsp; Profile
-                                       </a>
-                                   </li>
-                                   <li>
-                                       <a href="#"  class="d-flex align-items-center">
-                                            <i class='bx bx-lock'  style="font-size:23px"></i> Lock Screen
                                        </a>
                                    </li>
                                    <li>

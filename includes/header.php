@@ -23,6 +23,8 @@
       <link rel="stylesheet" type="text/css" href="assets/css/jquery.mCustomScrollbar.css">
       <!-- Custom CSS -->
       <link rel="stylesheet" type="text/css" href="assets/css/custom.css">
+      <!-- Select2 CSS -->
+      <link rel="stylesheet" type="text/css" href="assets/css/select2/css/select2.min.css">
 
       <!-- Select2 CDN -->
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" />            
