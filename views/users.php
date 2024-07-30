@@ -18,7 +18,11 @@
 						<tr>
 							<th class="text-center">SL No</th>
 							<th class="text-center">Name</th>
-							<th class="text-center">Type</th>
+                            <?php if($current_user['usertype'] == 'Teacher'){ ?>
+                                <th class="text-center">Current CPP</th>
+                            <?php  }else{   ?>
+							    <th class="text-center">Type</th>
+                            <?php } ?>
 							<th class="text-center">Status</th>
 							<th class="text-center">Action</th>
 						</tr>
@@ -31,7 +35,11 @@
 						<tr>
 							<td><?php echo ++$key; ?></td>
 							<td><?php echo $value['name']; ?></td>
-							<td><?php echo $value['usertype']; ?></td>
+                            <?php if ($current_user['usertype'] == 'Teacher') { ?>
+                                <td class="text-center"><?php echo htmlspecialchars($value['num_of_cpp'] ?? 'N/A'); ?></td>
+                            <?php } else { ?>
+                                <td><?php echo htmlspecialchars($value['usertype']); ?></td>
+                            <?php } ?>
 							<td><?php echo $value['status']; ?></td>
 							<td>
 								<a href="#view_modal<?php echo $value['id']; ?>" data-toggle="modal" class="btn btn-sm bg-primary">View</a>
@@ -87,8 +95,8 @@
                                                         <input type="text" class="form-control" name="name" value="<?php echo $value['name']; ?>" placeholder="Enter username" required>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="username" class="col-form-label">Username:</label>
-                                                        <input type="text" class="form-control" name="username" value="<?php echo $value['username']; ?>" placeholder="Enter username" required>
+                                                        <label for="username" class="col-form-label">Username/Student ID:</label>
+                                                        <input type="text" class="form-control" name="username" value="<?php echo $value['username']; ?>" placeholder="Enter username(Must be Student ID if student)" required>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="Phone" class="col-form-label">Phone:</label>
@@ -102,8 +110,14 @@
                                                         <label for="usertype" class="col-form-label">Usertype:</label>
                                                         <select name="usertype" id="usertype" class="form-control">
                                                             <option value="Student" <?php $value['usertype']=='Student' ? 'selected' : null; ?> >Student</option>
-                                                            <option value="Teacher" <?php $value['usertype']=='Teacher' ? 'selected' : null; ?> >Teacher</option>
-                                                            <option value="Developer" <?php $value['usertype']=='Developer' ? 'selected' : null; ?> >Developer</option>
+                                                            <?php 
+                                                                if($current_user['usertype'] == 'Developer'){
+                                                            ?>
+                                                                <option value="Teacher" <?php $value['usertype']=='Teacher' ? 'selected' : null; ?> >Teacher</option>
+                                                                <option value="Developer" <?php $value['usertype']=='Developer' ? 'selected' : null; ?> >Developer</option>
+                                                            <?php
+                                                                }
+                                                            ?>
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
@@ -155,7 +169,7 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="post" action="core/user-add.php">
+            <form id="userForm" method="post" action="core/user-add.php">
                 <div class="modal-body">
                     <div class="row">
                         <div class="form-group col-md-6">
@@ -167,8 +181,8 @@
                             <input type="text" class="form-control" name="phone" placeholder="Enter Phone" required>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="username" class="col-form-label">Username:</label>
-                            <input type="text" class="form-control" name="username" value="" placeholder="Enter username" required>
+                            <label for="username" class="col-form-label">Username/Student ID:</label>
+                            <input type="text" class="form-control" name="username" value="" placeholder="Enter username(Must be Student ID if student)" required>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="password" class="col-form-label">Password:</label>
@@ -178,8 +192,14 @@
                             <label for="usertype" class="col-form-label">Usertype:</label>
                             <select name="usertype" id="usertype" class="form-control">
                                 <option value="Student">Student</option>
-                                <option value="Teacher">Teacher</option>
-                                <option value="Developer">Developer</option>
+                                <?php 
+                                    if($current_user['usertype'] == 'Developer'){
+                                ?>
+                                    <option value="Teacher">Teacher</option>
+                                    <option value="Developer">Developer</option>
+                                <?php
+                                    }
+                                ?>
                             </select>
                         </div>
                         <div class="form-group col-md-6">
@@ -196,7 +216,7 @@
                     <div class="row justify-content-center w-100">
                         <div class="col-12 text-center">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save Change</button>
+                            <button type="button" class="btn btn-primary" id="submitBtn">Save Changes</button>
                         </div>
                     </div>
                 </div>

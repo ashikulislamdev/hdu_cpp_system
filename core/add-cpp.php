@@ -8,7 +8,7 @@ if (!isset($current_user)) {
 }
 
 // Check if the user is a Developer
-if ($current_user['usertype'] != 'Developer') {
+if ($current_user['usertype'] == 'Student') {
     die('You have no permission to access this page.');
 }
 
