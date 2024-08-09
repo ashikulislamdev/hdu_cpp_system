@@ -6,7 +6,7 @@ include 'session.php';
 if (!isset($current_user)) {
     die('Unauthorized Error');
 }
-if ($current_user['usertype'] != 'Developer') {
+if ($current_user['usertype'] == 'Student') {
     die('You have no permission to access this page.');
 }
 

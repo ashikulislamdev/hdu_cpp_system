@@ -67,7 +67,7 @@
                                     <div class="col-md-12">
                                         <hr/>
                                         <p class="text-inverse text-center m-b-0">Thank you and enjoy our Software.</p>
-                                        <p class="text-inverse text-center"><b>Develop by <a href="#" class="text-primary">RS GROUP</a></b></p>
+                                        <p class="text-inverse text-center"><b>Develop by <a href="https://flutterdeveloper.xyz/" target="_blank" class="text-primary">RS GROUP</a></b></p>
                                     </div>
                                 </div>
                             </div>

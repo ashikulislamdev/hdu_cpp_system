@@ -2,13 +2,16 @@
 <html lang="en">
 
 <head>
-      <title>CPP Management System</title>
+      <title>HDU CPP Management System</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-      <meta name="description" content="CPP Management System" />
-      <meta name="keywords" content="CPP Management System" />
-      <meta name="author" content="codedthemes">
+      <!-- Meta Description -->
+      <meta name="description" content="CPP Management System is a comprehensive platform for efficiently managing student cumulative points, reputation, and performance in educational institutions." />
+      <!-- Meta Keywords -->
+      <meta name="keywords" content="CPP Management System, hangzhou dianzi university, student performance management, reputation points, education management software, student points tracking, teacher tools, school management system" />
+      <!-- Author Meta -->
+      <meta name="author" content="Asikul Islam Sawan(ashikulislamdev)">
       <!-- Favicon icon -->
       <link rel="icon" href="assets/images/logo.png" type="image/x-icon">
       <meta property="og:image" content="assets/images/logo.png" />

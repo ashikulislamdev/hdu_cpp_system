@@ -11,7 +11,7 @@
 
 <div class="row">
     <div class="col-md-12 mx-auto">
-        <form action="core/add-cpp.php" method="post">
+        <form action="core/add-cpp.php" method="post" id="userForm">
             <div class="col-lg-12">
                 <div class="card mb-4">
                     <div class="card-body">
@@ -56,7 +56,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary"  id="submitBtn">Submit</button>
                     </div>
                 </div>
             </div>
@@ -109,11 +109,10 @@
                                                     $runStudentQuery = mysqli_query($conn, $studentQuery);
                                                     
                                                     if ($runStudentQuery && mysqli_num_rows($runStudentQuery) > 0) {
-                                                        echo "<p class='m-0'>Student List:</p><ul>";
+                                                        echo "<p class='m-0'>Student List: (Total-" . $value['num_of_students'] . ")</p>";
                                                         while ($studentRow = mysqli_fetch_assoc($runStudentQuery)) {
-                                                            echo "<li><b>" . htmlspecialchars($studentRow['username']) . "</b></li>";
+                                                            echo "<b>" . htmlspecialchars($studentRow['username']) . "</b>, ";
                                                         }
-                                                        echo "</ul>";
                                                     } else {
                                                         echo "<p>No students found for this submission.</p>";
                                                     }

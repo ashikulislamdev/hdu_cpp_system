@@ -61,7 +61,7 @@
                                         <div style=" float: left;" class="pr-2 bg-white">
                                             <img src="<?php echo "images/". $current_user['image'] ?? null; ?>" onerror="this.src='assets/images/logo.png'" style="max-height: 120px; max-width: 120px; border-radius: 5px;">
                                         </div>
-                                        <p class="m-0">Username: <b><?php echo $value['username']; ?></b></p>
+                                        <p class="m-0">Username/StudentID: <b><?php echo $value['username']; ?></b></p>
                                         <hr>
                                         <p class="m-0">Name: <b><?php echo $value['name']; ?></b></p>
                                         <hr>
@@ -216,7 +216,7 @@
                     <div class="row justify-content-center w-100">
                         <div class="col-12 text-center">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" id="submitBtn">Save Changes</button>
+                            <button type="submit" class="btn btn-primary" id="submitBtn">Save Changes</button>
                         </div>
                     </div>
                 </div>

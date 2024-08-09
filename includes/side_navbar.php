@@ -29,4 +29,5 @@
             <?php } ?>
         </ul>
     </div>
+    <p class="text-center">Developed by <a href="https://flutterdeveloper.xyz/" target="_blank"><b>Sawan</b></a></p>
 </nav>
